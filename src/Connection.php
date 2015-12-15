@@ -154,7 +154,20 @@ class Connection
      */
     protected function sendRecord (Record $record)
     {
-        \fwrite($this->socket, (string) $record, \count($record));
+        $count = \count($record);
+        $counter = 0;
+        for ($written = 0; $written < $count && $counter < 10; $written += $fwrite) {
+            $fwrite = fwrite($this->socket, substr((string) $record, $written));
+            if ($fwrite === false) {
+                throw new ConnectionException(
+                    printf(
+                        'Could not write record for request %s.',
+                        $record->requestId
+                    )
+                );
+            }
+            $counter++;
+        }
     }
 
     /**

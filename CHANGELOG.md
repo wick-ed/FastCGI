@@ -1,3 +1,13 @@
+# Version 1.0.2
+
+## Bugfixes
+
+* Introduced write retries to handle temporarily unavailable sockets
+
+## Features
+
+* None
+
 # Version 1.0.1
 
 ## Bugfixes
